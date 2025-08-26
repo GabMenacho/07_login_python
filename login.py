@@ -26,8 +26,26 @@ def existe(usuario):
             #se resultar em None queremos responder que o resultado não existe, em caso contrario ele responderá True
             return result != None
 
+def novo_usuario(login,senha):
+    with pyscopg.connect(
+        host='localhost',
+        port=5432,
+        bdname='20252_fatec_ipi_pbdi_gabriela_menacho',
+        user='postgres',
+        pasword='postgres'
+
+    ) as conexao: 
+       with conexao.cursor() as cursor:
+                cursor.execute(
+                    'NSERT INTO tb_usuario (login, senha) VALUES (login=%s, senha=%s)'
+                    (f'{usuario.login}', f'{usuario.senha}')
+                )
+                result = cursor.fetchone()
+                return result != None
+
+
 def menu():
-    texto = '0-sair\n1-Login\n2-Logoff\n'
+    texto = '0-sair\n1-Login\n2-Logoff\n3-Criar_usuario\n'
     usuario = None
     #usuario vai criar um login e senha e esse parametro como menu vai usar o existe
     op = int(input(texto))
@@ -42,6 +60,11 @@ def menu():
             print('Logoff feito com sucesso')
             #precisa atualizar a variavel op para saber se continua ou nao
             op = int(input(texto))
+        elif op ==3:
+            login = input('Digite um nome para login de novo usuario')
+            senha = input('Digite a senha')
+            usuario = novo_usuario(login,senha)
+            
     else:
         print('Até mais')
 
