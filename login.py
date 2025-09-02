@@ -12,7 +12,7 @@ def existe(usuario):
     with pyscopg.connect(
         host='localhost',
         port=5432,
-        bdname='20252_fatec_ipi_pbdi_gabriela_menacho',
+        dbname='20252_fatec_ipi_pbdi_gabriela_menacho',
         user='postgres',
         pasword='postgres'
 
@@ -27,21 +27,21 @@ def existe(usuario):
             return result != None
 
 def novo_usuario(login,senha):
-    with pyscopg.connect(
+    with psycopg.connect(
         host='localhost',
         port=5432,
-        bdname='20252_fatec_ipi_pbdi_gabriela_menacho',
+        dbname='20252_fatec_ipi_pbdi_gabriela_menacho',
         user='postgres',
-        pasword='postgres'
+        password='postgres'
 
     ) as conexao: 
        with conexao.cursor() as cursor:
                 cursor.execute(
-                    'NSERT INTO tb_usuario (login, senha) VALUES (login=%s, senha=%s)'
-                    (f'{usuario.login}', f'{usuario.senha}')
+                    'INSERT INTO tb_usuario (login, senha) VALUES (%s, %s)',
+                    (f'{login}', f'{senha}')
                 )
-                result = cursor.fetchone()
-                return result != None
+                conexao.commit()
+                return True
 
 
 def menu():
@@ -51,8 +51,8 @@ def menu():
     op = int(input(texto))
     while op !=0:
         if op ==1:
-            login = input('Digite seu login')
-            senha = input('Digite sua senha')
+            login = input('Digite seu login: ')
+            senha = input('Digite sua senha: ')
             usuario = Usuario(login, senha)
             print('Usuário OK!' if existe (usuario) else 'Usuário NOK')
         elif op == 2:
@@ -61,9 +61,13 @@ def menu():
             #precisa atualizar a variavel op para saber se continua ou nao
             op = int(input(texto))
         elif op ==3:
-            login = input('Digite um nome para login de novo usuario')
-            senha = input('Digite a senha')
-            usuario = novo_usuario(login,senha)
+            login = input('Digite um nome para login de novo usuario: ')
+            senha = input('Digite a senha: ')
+            if novo_usuario(login, senha):
+                print('Novo usuário criado com sucesso!')
+            else:
+                print('Erro ao criar novo usuário!')
+            op = int(input(texto))
             
     else:
         print('Até mais')
