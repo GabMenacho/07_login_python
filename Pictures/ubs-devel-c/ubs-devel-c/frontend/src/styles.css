@@ -1,0 +1,171 @@
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h5 {
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Hero Section */
+section.bg-primary {
+  background-color: #004646 !important; /* Adicionado !important aqui */
+  padding: 50px 0;
+}
+
+section.bg-primary h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #004646 !important; /* Adicionado !important aqui */
+}
+
+section.bg-primary .lead {
+  font-size: 1.25rem;
+  color: #004646 !important; /* Adicionado !important aqui */
+}
+section.bg-primary .container {
+  text-align: center;
+}
+
+/* Cards Section */
+section.py-5 {
+  padding: 50px 0;
+}
+
+.card {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background-color: #ffffff;
+}
+
+.card:hover {
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.card-body {
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 15px;
+  color: #004646;
+}
+
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #004646;
+}
+
+.btn-primary {
+  background-color: #004646;
+  border-color: #004646;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #004646;
+  border-color: #004646;
+}
+
+.row.text-center {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.col-md-4 {
+  flex: 1;
+  max-width: 300px;
+}
+
+/* Footer */
+footer {
+  background-color: #004646;
+  color: #ffffff;
+  padding: 30px 0;
+}
+
+footer h5 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+footer p {
+  font-size: 1rem;
+}
+
+footer .text-md-end {
+  text-align: right;
+}
+
+footer .me-3 {
+  margin-right: 15px;
+}
+
+footer a {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #50bfad;
+}
+
+/* Força a cor de fundo para a barra de navegação */
+nav.bg-primary {
+  background-color: #50BFAD !important;
+}
+
+/* Força a cor do texto para o menu da navegação */
+nav.nav-dark .nav-link,
+nav.nav-dark .navbar-brand {
+  color: #ffffff !important;
+}
+
+/* Altera a cor do texto para branco no título principal e na descrição */
+section.bg-primary h1,
+section.bg-primary .lead {
+  color: #ffffff !important;
+}
+
+/* Altera a cor do texto para branco na barra de navegação */
+nav.nav-dark .nav-link,
+nav.nav-dark .navbar-brand {
+  color: #ffffff !important;
+}
+
+/* Mantenha esta regra para a cor de fundo da navegação */
+nav.bg-primary {
+  background-color: #004646 !important;
+}
+
+/* Regras para o link que está ativo */
+.nav-link.active {
+  background-color: #004646 !important; /* Muda o fundo do link ativo para o verde */
+  color: #ffffff !important;           /* Garante que o texto fique branco */
+  border-color: transparent !important; /* Remove a borda azul se houver */
+}
+
+/* Regras para o link ao passar o mouse */
+.nav-link:hover {
+  background-color: #004646 !important; /* Muda o fundo do link ao passar o mouse */
+  color: #ffffff !important;           /* Garante que o texto fique branco */
+  border-color: transparent !important; /* Remove a borda azul se houver */
+}

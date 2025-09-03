@@ -1,0 +1,22 @@
+<form (ngSubmit)="cadastroUsuario()">
+  <h2 style="color: #004646;">Cadastro de Usuário</h2>
+
+  <div *ngIf="errorMessage" style="color: red;">
+    {{ errorMessage }}
+  </div>
+
+  <label for="matricula" style="color: #004646;">Matrícula:</label>
+  <input id="matricula" name="matricula" [(ngModel)]="usuario.matricula" /><br />
+
+  <label for="email" style="color: #004646;">Email:</label>
+  <input id="email" name="email" type="email" [(ngModel)]="usuario.email" /><br />
+
+  <label for="senha" style="color: #004646;">Senha:</label>
+  <input id="senha" name="senha" type="password" [(ngModel)]="usuario.senha" /><br />
+
+  <label for="funcao" style="color: #004646;">Função:</label>
+  <input id="funcao" name="funcao" [(ngModel)]="usuario.funcao" /><br />
+
+  <button type="submit">Cadastrar</button>
+  <button type="button" (click)="voltar()">Voltar</button>
+</form>

@@ -1,0 +1,118 @@
+<main class="main">
+    <section class="section" *ngIf="secao === 'busca'">
+        <div class="section-header">
+            <h2><i class="fas fa-search"></i> Buscar Paciente para Agendamento</h2>
+            <p>Digite o nome do paciente para iniciar</p>
+        </div>
+        
+        <div class="search-form">
+            <div class="input-group">
+                <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="buscarPacientes()" placeholder="Digite o nome do paciente...">
+                <button class="btn btn-primary" (click)="buscarPacientes()">
+                    <i class="fas fa-search"></i>
+                    Buscar
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="loading" class="text-center">
+            <i class="fas fa-spinner fa-spin"></i> Carregando...
+        </div>
+
+        <div class="results-container" *ngIf="!loading && searchResults.length > 0">
+            <div *ngFor="let paciente of searchResults" class="patient-card">
+                <div class="patient-info">
+                     <div class="info-item">
+                        <span class="info-label">Nome</span>
+                        <span class="info-value">{{ paciente.nomeCompleto }}</span>
+                    </div>
+                     <div class="info-item">
+                        <span class="info-label">CPF</span>
+                        <span class="info-value">{{ paciente.cpf }}</span>
+                    </div>
+                </div>
+                 <div class="card-actions">
+                    <button class="btn btn-primary" (click)="selecionarPacienteParaAgendamento(paciente)">
+                        <i class="fas fa-check"></i>
+                        Agendar para este Paciente
+                    </button>
+                    <button class="btn btn-secondary" (click)="abrirModalPaciente(paciente)">
+                        <i class="fas fa-eye"></i>
+                        Ver Detalhes
+                    </button>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" *ngIf="secao === 'agendamento'">
+        <div class="section-header">
+            <h2><i class="fas fa-calendar-plus"></i> Agendar Consulta</h2>
+            <p>Selecione o médico, data e horário</p>
+        </div>
+
+        <div class="schedule-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Paciente Selecionado:</label>
+                    <div class="selected-info">
+                        <ng-container *ngIf="pacienteParaAgendamento">
+                            <strong>{{ pacienteParaAgendamento.nomeCompleto }}</strong> (CPF: {{ pacienteParaAgendamento.cpf }})
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                 <div class="form-group">
+                    <label for="tipo-consulta">Tipo da Consulta:</label>
+                    <select id="tipo-consulta" class="form-control" [(ngModel)]="agendamento.tipoConsulta">
+                        <option value="PRIMEIRA_VEZ">Primeira Vez</option>
+                        <option value="RETORNO">Retorno</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="specialty-filter">Filtrar por Especialidade:</label>
+                    <select id="specialty-filter" [(ngModel)]="agendamento.especialidade" (change)="filtrarMedicos()">
+                        <option value="">Todas as especialidades</option>
+                        <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="doctor-select">Médico:</label>
+                    <select id="doctor-select" [(ngModel)]="agendamento.medicoCodigo" (change)="atualizarHorariosDisponiveis()">
+                        <option value="">Selecione um médico...</option>
+                        <option *ngFor="let medico of medicosFiltrados" [value]="medico.codigo">
+                            {{ medico.nomeCompleto }} - {{ medico.especialidade }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="appointment-date">Data:</label>
+                    <input type="date" id="appointment-date" [(ngModel)]="agendamento.data" (change)="atualizarHorariosDisponiveis()">
+                </div>
+                <div class="form-group">
+                    <label for="appointment-time">Horário:</label>
+                    <select id="appointment-time" [(ngModel)]="agendamento.hora">
+                        <option value="">Selecione um horário...</option>
+                        <option *ngFor="let hora of horariosDisponiveis" [value]="hora">{{ hora }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-success" (click)="agendarConsulta()" [disabled]="!isFormValid()">
+                    <i class="fas fa-calendar-check"></i>
+                    Confirmar Agendamento
+                </button>
+                <button class="btn btn-danger" (click)="voltarParaBusca()">
+                    <i class="fas fa-search"></i>
+                    Trocar Paciente
+                </button>
+            </div>
